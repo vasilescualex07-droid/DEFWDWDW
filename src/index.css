@@ -1,0 +1,1382 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 228 44% 2%;
+    --foreground: 210 40% 98%;
+
+    --card: 228 35% 6%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 5%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 142 76% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 228 26% 10%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 228 22% 15%;
+    --muted-foreground: 215 20% 55%;
+
+    --accent: 45 100% 50%;
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 228 22% 18%;
+    --input: 228 24% 12%;
+    --ring: 142 76% 45%;
+
+    --radius: 0.75rem;
+
+    /* Casino-specific tokens */
+    --win: 142 76% 45%;
+    --lose: 0 72% 51%;
+    --gold: 42 100% 52%;
+    --neon-green: 142 100% 50%;
+    --neon-purple: 280 100% 60%;
+    --neon-cyan: 185 100% 50%;
+    --neon-blue: 217 91% 60%;
+    --neon-pink: 330 100% 60%;
+
+    --gradient-casino: linear-gradient(180deg, hsl(228 44% 2%), hsl(228 40% 5%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 100% 50%), hsl(35 100% 40%));
+    --gradient-win: linear-gradient(135deg, hsl(142 76% 45%), hsl(142 76% 35%));
+    --gradient-dark: linear-gradient(180deg, hsl(228 35% 7%), hsl(228 44% 2%));
+    --gradient-blue: linear-gradient(135deg, hsl(217 91% 60%), hsl(185 100% 50%));
+    --gradient-purple: linear-gradient(135deg, hsl(280 100% 60%), hsl(330 100% 60%));
+
+    --shadow-glow-green: 0 0 30px hsl(142 76% 45% / 0.4);
+    --shadow-glow-gold: 0 0 30px hsl(45 100% 50% / 0.4);
+    --shadow-glow-purple: 0 0 30px hsl(280 100% 60% / 0.3);
+    --shadow-glow-cyan: 0 0 30px hsl(185 100% 50% / 0.3);
+    --shadow-glow-red: 0 0 30px hsl(0 72% 51% / 0.4);
+    --shadow-glow-blue: 0 0 30px hsl(217 91% 60% / 0.4);
+
+    /* FX budget controls (high/med/low via body[data-fx]) */
+    --scanline-alpha: 0.08;
+    --vignette-opacity: 1;
+    --vignette-strong-opacity: 1;
+
+    --card-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.5) inset,
+      0 4px 30px rgba(0, 0, 0, 0.7),
+      0 0 60px rgba(0, 0, 0, 0.4),
+      0 0 80px hsl(45 100% 50% / 0.03);
+
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --sidebar-background: 222 47% 5%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 142 76% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 33% 12%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 142 76% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    position: relative;
+    background-image:
+      radial-gradient(circle at 20% 15%, rgba(122, 75, 18, 0.09), transparent 35%),
+      radial-gradient(circle at 80% 80%, rgba(40, 18, 70, 0.12), transparent 42%);
+  }
+
+  body[data-fx='med'] {
+    --scanline-alpha: 0.06;
+    --vignette-opacity: 0.9;
+    --vignette-strong-opacity: 0.9;
+    --shadow-glow-green: 0 0 22px hsl(142 76% 45% / 0.32);
+    --shadow-glow-gold: 0 0 22px hsl(45 100% 50% / 0.32);
+    --shadow-glow-purple: 0 0 22px hsl(280 100% 60% / 0.24);
+    --shadow-glow-cyan: 0 0 22px hsl(185 100% 50% / 0.24);
+    --shadow-glow-red: 0 0 22px hsl(0 72% 51% / 0.32);
+    --shadow-glow-blue: 0 0 22px hsl(217 91% 60% / 0.32);
+    --card-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.5) inset,
+      0 4px 22px rgba(0, 0, 0, 0.62),
+      0 0 46px rgba(0, 0, 0, 0.36),
+      0 0 70px hsl(45 100% 50% / 0.02);
+  }
+
+  body[data-fx='low'] {
+    --scanline-alpha: 0.04;
+    --vignette-opacity: 0.75;
+    --vignette-strong-opacity: 0.75;
+    --shadow-glow-green: 0 0 14px hsl(142 76% 45% / 0.26);
+    --shadow-glow-gold: 0 0 14px hsl(45 100% 50% / 0.26);
+    --shadow-glow-purple: 0 0 14px hsl(280 100% 60% / 0.2);
+    --shadow-glow-cyan: 0 0 14px hsl(185 100% 50% / 0.2);
+    --shadow-glow-red: 0 0 14px hsl(0 72% 51% / 0.26);
+    --shadow-glow-blue: 0 0 14px hsl(217 91% 60% / 0.26);
+    --card-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.5) inset,
+      0 4px 16px rgba(0, 0, 0, 0.55),
+      0 0 24px rgba(0, 0, 0, 0.28);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.08;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(255, 215, 120, 0.15) 0 1px, transparent 1px 12px),
+      repeating-linear-gradient(-45deg, rgba(255, 215, 120, 0.08) 0 1px, transparent 1px 16px);
+    mix-blend-mode: soft-light;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(45 100% 50%), hsl(35 100% 40%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-neon {
+    background: linear-gradient(135deg, hsl(142 100% 50%), hsl(185 100% 50%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-blue {
+    background: linear-gradient(135deg, hsl(217 91% 60%), hsl(185 100% 50%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-purple {
+    background: linear-gradient(135deg, hsl(280 100% 60%), hsl(330 100% 60%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-radial {
+    background: radial-gradient(circle at center, var(--tw-gradient-stops));
+  }
+
+  .glow-green {
+    box-shadow: var(--shadow-glow-green);
+  }
+
+  .glow-gold {
+    box-shadow: var(--shadow-glow-gold);
+  }
+
+  .glow-purple {
+    box-shadow: var(--shadow-glow-purple);
+  }
+
+  .glow-cyan {
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  .glow-red {
+    box-shadow: var(--shadow-glow-red);
+  }
+
+  .glow-blue {
+    box-shadow: var(--shadow-glow-blue);
+  }
+
+  .bg-casino-gradient {
+    background: var(--gradient-casino);
+  }
+
+  .bg-dark-gradient {
+    background: var(--gradient-dark);
+  }
+
+  /* Game animations */
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  .animate-pop {
+    animation: pop 0.3s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.4s ease-out;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 1.5s ease-in-out infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin 3s linear infinite;
+  }
+
+  .animate-bounce-in {
+    animation: bounce-in 0.5s ease-out;
+  }
+
+  .animate-flip {
+    animation: flip 0.6s ease-out;
+  }
+
+  .animate-bj-deal-in {
+    animation: bj-card-deal-in 0.48s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
+  }
+
+  .animate-plinko-chute {
+    animation: plinko-chute-pulse 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .animate-plinko-drop-ring {
+    animation: plinko-drop-ring 0.42s ease-out forwards;
+  }
+
+  .animate-mines-tile-snap {
+    animation: mines-tile-snap 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .animate-slots-reel-blur {
+    animation: slots-reel-blur 0.09s ease-in-out infinite;
+  }
+
+  .animate-crash-tick-glow {
+    animation: crash-tick-glow 0.55s ease-in-out infinite;
+  }
+
+  .animate-limbo-roll-shake {
+    animation: limbo-roll-shake 0.45s ease-in-out infinite;
+  }
+
+  .animate-pointer-settle-kick {
+    animation: pointer-settle-kick 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .animate-tower-tile-snap {
+    animation: tower-tile-snap 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .animate-stack-drop-flash {
+    animation: stack-drop-flash 0.38s ease-out forwards;
+  }
+
+  .animate-keno-ball-pop {
+    animation: keno-ball-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .animate-hilo-mystery-shuffle {
+    animation: hilo-mystery-shuffle 0.5s ease-in-out infinite;
+  }
+
+  .animate-reveal {
+    animation: reveal 0.3s ease-out;
+  }
+
+  .animate-win-flash {
+    animation: win-flash 0.5s ease-out;
+  }
+
+  /* Roguelike & punchy animations */
+  .animate-fade-in {
+    animation: fade-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .animate-screen-shake {
+    animation: screen-shake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  }
+
+  .animate-delta-pop-in {
+    animation: delta-pop-in 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .animate-impact-pop {
+    animation: impact-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .animate-float-rogue {
+    animation: float-rogue 4s ease-in-out infinite;
+  }
+
+  .animate-danger-pulse {
+    animation: danger-pulse 1.2s ease-in-out infinite;
+  }
+
+  .animate-stagger-in {
+    animation: stagger-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .animate-delta-float {
+    animation: delta-float 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .animate-text-glow-pulse {
+    animation: text-glow-pulse 2s ease-in-out infinite;
+  }
+
+  /* Roguelike vignette – obvious dark edges */
+  .vignette {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(
+      ellipse 75% 75% at 50% 50%,
+      transparent 35%,
+      rgba(0, 0, 0, 0.55) 65%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+    opacity: var(--vignette-opacity);
+  }
+
+  .vignette-strong {
+    background: radial-gradient(
+      ellipse 60% 60% at 50% 50%,
+      transparent 25%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.92) 100%
+    );
+    opacity: var(--vignette-strong-opacity);
+  }
+
+  /* Full-screen flash on win/lose */
+  .flash-screen {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 40;
+    animation: flash-screen 0.6s ease-out forwards;
+  }
+
+  .flash-screen.win {
+    background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.35), rgba(255, 180, 0, 0.15), transparent 60%);
+  }
+
+  .flash-screen.lose {
+    background: radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.4), rgba(180, 0, 0, 0.2), transparent 55%);
+  }
+
+  /* Visible scanlines for roguelike grit */
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, var(--scanline-alpha)) 2px,
+      rgba(0, 0, 0, var(--scanline-alpha)) 4px
+    );
+    z-index: 1;
+  }
+
+  .game-card {
+    @apply bg-card border rounded-xl p-6 relative overflow-hidden;
+    background: linear-gradient(165deg, hsl(222 47% 9%) 0%, hsl(222 47% 5%) 50%, hsl(222 47% 3%) 100%);
+    border-color: hsl(45 100% 50% / 0.12);
+    box-shadow: var(--card-shadow);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .game-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, hsl(45 100% 50% / 0.08) 0%, transparent 40%, hsl(280 100% 60% / 0.04) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .casino-card-glow {
+    border-color: hsl(45 100% 50% / 0.15);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .casino-card-glow:hover {
+    border-color: hsl(45 100% 50% / 0.25);
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.5) inset,
+      0 4px 30px rgba(0, 0, 0, 0.7),
+      0 0 50px hsl(45 100% 50% / 0.08),
+      0 0 100px hsl(45 100% 50% / 0.04);
+  }
+
+  .game-tile {
+    @apply transition-all duration-200;
+    background: linear-gradient(180deg, hsl(222 47% 14%), hsl(222 47% 9%));
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 215, 0, 0.04);
+  }
+
+  .game-tile:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.08);
+  }
+
+  .game-tile:active:not(:disabled) {
+    transform: translateY(-1px) scale(0.99);
+  }
+
+  .neon-border {
+    position: relative;
+  }
+
+  .neon-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, hsl(142 76% 45% / 0.5), hsl(185 100% 50% / 0.5));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(142 76% 45% / 0.4);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(142 76% 45% / 0.6);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+
+  @keyframes pop {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { 
+      filter: drop-shadow(0 0 10px currentColor);
+      opacity: 1;
+    }
+    50% { 
+      filter: drop-shadow(0 0 20px currentColor);
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes bounce-in {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.15); }
+    70% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes flip {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(180deg); }
+  }
+
+  /* Blackjack — deal-in + hole-card flip (main action frame) */
+  @keyframes bj-card-deal-in {
+    0% {
+      transform: translateY(-36px) rotate(-10deg) scale(0.88);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes plinko-chute-pulse {
+    0% {
+      opacity: 0.95;
+      transform: scaleY(0.35);
+      transform-origin: top center;
+    }
+    45% {
+      opacity: 0.55;
+      transform: scaleY(1);
+      transform-origin: top center;
+    }
+    100% {
+      opacity: 0;
+      transform: scaleY(1.12);
+      transform-origin: top center;
+    }
+  }
+
+  @keyframes plinko-drop-ring {
+    0% {
+      transform: translate(-50%, -50%) scale(0.4);
+      opacity: 0.85;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(2.2);
+      opacity: 0;
+    }
+  }
+
+  /* Other games — main action moments */
+  @keyframes mines-tile-snap {
+    0% {
+      transform: scale(0.82) rotate(-4deg);
+      opacity: 0.85;
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slots-reel-blur {
+    0%,
+    100% {
+      transform: translateY(0);
+      filter: blur(0);
+    }
+    50% {
+      transform: translateY(-6px);
+      filter: blur(0.5px);
+    }
+  }
+
+  @keyframes crash-tick-glow {
+    0%,
+    100% {
+      filter: brightness(1) drop-shadow(0 0 12px hsl(280 80% 55% / 0.35));
+    }
+    50% {
+      filter: brightness(1.12) drop-shadow(0 0 22px hsl(45 100% 55% / 0.45));
+    }
+  }
+
+  @keyframes limbo-roll-shake {
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 0.75;
+    }
+    33% {
+      transform: translateY(-5px) scale(1.02);
+      opacity: 1;
+    }
+    66% {
+      transform: translateY(4px) scale(0.99);
+      opacity: 0.9;
+    }
+  }
+
+  @keyframes pointer-settle-kick {
+    0% {
+      transform: translateY(0) rotate(0deg);
+    }
+    35% {
+      transform: translateY(4px) rotate(-6deg);
+    }
+    70% {
+      transform: translateY(-2px) rotate(5deg);
+    }
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+  }
+
+  @keyframes tower-tile-snap {
+    0% {
+      transform: scale(0.88);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes stack-drop-flash {
+    0% {
+      opacity: 0.55;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes keno-ball-pop {
+    0% {
+      transform: scale(0.85);
+      box-shadow: 0 0 0 0 hsl(142 76% 45% / 0.6);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 8px hsl(142 76% 45% / 0);
+    }
+  }
+
+  @keyframes hilo-mystery-shuffle {
+    0%,
+    100% {
+      transform: rotateY(0deg) translateY(0);
+    }
+    50% {
+      transform: rotateY(12deg) translateY(-3px);
+    }
+  }
+
+  @keyframes reveal {
+    0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  @keyframes win-flash {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: hsl(142 76% 45% / 0.2); }
+  }
+
+  @keyframes crash-multiplier {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes dice-roll {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(90deg) scale(1.1); }
+    50% { transform: rotate(180deg) scale(1); }
+    75% { transform: rotate(270deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  @keyframes number-pop {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    50% { transform: scale(1.3) rotate(10deg); }
+    75% { transform: scale(0.9) rotate(-5deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  @keyframes confetti-fall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes glow-rotate {
+    0% { filter: drop-shadow(0 0 5px hsl(142 76% 45%)) hue-rotate(0deg); }
+    100% { filter: drop-shadow(0 0 15px hsl(142 76% 45%)) hue-rotate(360deg); }
+  }
+
+  @keyframes fade-in {
+    0% { opacity: 0; transform: translateY(8px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes screen-shake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    6% { transform: translate(-14px, -4px) rotate(-1deg); }
+    12% { transform: translate(14px, 4px) rotate(1deg); }
+    18% { transform: translate(-12px, 3px) rotate(-0.8deg); }
+    24% { transform: translate(12px, -3px) rotate(0.8deg); }
+    30% { transform: translate(-10px, -2px) rotate(-0.5deg); }
+    36% { transform: translate(10px, 2px) rotate(0.5deg); }
+    42% { transform: translate(-6px, 1px) rotate(-0.3deg); }
+    48% { transform: translate(6px, -1px) rotate(0.3deg); }
+    54% { transform: translate(-4px, 0) rotate(-0.1deg); }
+    60% { transform: translate(4px, 0) rotate(0.1deg); }
+    66% { transform: translate(-2px, 0) rotate(0deg); }
+    74% { transform: translate(2px, 0) rotate(0deg); }
+    82% { transform: translate(-1px, 0) rotate(0deg); }
+    90% { transform: translate(1px, 0) rotate(0deg); }
+  }
+
+  @keyframes flash-screen {
+    0% { opacity: 1; }
+    40% { opacity: 0.9; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes impact-pop {
+    0% { transform: scale(0.7); opacity: 0; filter: brightness(1.5); }
+    50% { transform: scale(1.12); }
+    70% { transform: scale(0.96); }
+    100% { transform: scale(1); opacity: 1; filter: brightness(1); }
+  }
+
+  @keyframes float-rogue {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-4px) rotate(0.5deg); }
+    50% { transform: translateY(0) rotate(0deg); }
+    75% { transform: translateY(-6px) rotate(-0.3deg); }
+  }
+
+  @keyframes danger-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 20px hsl(0 72% 51% / 0.3); }
+    50% { opacity: 0.9; box-shadow: 0 0 35px hsl(0 72% 51% / 0.5); }
+  }
+
+  @keyframes stagger-in {
+    0% { opacity: 0; transform: translateY(12px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes delta-float {
+    0% { opacity: 1; transform: translateY(0) scale(1.2); }
+    15% { opacity: 1; transform: translateY(-6px) scale(1.35); }
+    100% { opacity: 0; transform: translateY(-56px) scale(1.15); }
+  }
+
+  @keyframes delta-pop-in {
+    0% { opacity: 0; transform: translateY(4px) scale(0.5); }
+    25% { opacity: 1; transform: translateY(-2px) scale(1.25); }
+    100% { opacity: 1; transform: translateY(-2px) scale(1); }
+  }
+
+  @keyframes text-glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 8px currentColor); opacity: 1; }
+    50% { filter: drop-shadow(0 0 16px currentColor); opacity: 0.95; }
+  }
+
+  /* Roguelike pop VFX */
+  @keyframes pop-burst {
+    0% { transform: scale(0.6); opacity: 0.8; filter: brightness(1.4); }
+    45% { transform: scale(1.18); opacity: 1; filter: brightness(1.1); }
+    70% { transform: scale(0.92); }
+    100% { transform: scale(1); opacity: 1; filter: brightness(1); }
+  }
+
+  @keyframes ring-expand {
+    0% { transform: scale(0.3); opacity: 0.9; border-color: rgba(255, 215, 0, 0.8); }
+    50% { opacity: 0.5; }
+    100% { transform: scale(2.2); opacity: 0; border-color: rgba(255, 215, 0, 0); }
+  }
+
+  @keyframes ring-expand-win {
+    0% { transform: scale(0.3); opacity: 0.8; border-color: rgba(34, 197, 94, 0.8); }
+    100% { transform: scale(2); opacity: 0; border-color: rgba(34, 197, 94, 0); }
+  }
+
+  @keyframes ring-expand-lose {
+    0% { transform: scale(0.3); opacity: 0.7; border-color: rgba(220, 38, 38, 0.7); }
+    100% { transform: scale(2); opacity: 0; border-color: rgba(220, 38, 38, 0); }
+  }
+
+  @keyframes sparkle-twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.6); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  @keyframes sparkle-float {
+    0%, 100% { opacity: 0.4; transform: translate(0, 0) scale(0.8); }
+    25% { opacity: 1; transform: translate(2px, -3px) scale(1.1); }
+    50% { opacity: 0.7; transform: translate(-1px, -5px) scale(0.9); }
+    75% { opacity: 1; transform: translate(-2px, -2px) scale(1.05); }
+  }
+
+  @keyframes sparkle-burst {
+    0% { opacity: 0; transform: translate(0, 0) scale(0); }
+    20% { opacity: 1; transform: translate(var(--tx), var(--ty)) scale(1); }
+    100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.3); }
+  }
+
+  .animate-pop-burst {
+    animation: pop-burst 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .animate-sparkle-twinkle {
+    animation: sparkle-twinkle 1.2s ease-in-out infinite;
+  }
+
+  .animate-sparkle-float {
+    animation: sparkle-float 2s ease-in-out infinite;
+  }
+
+  /* Per-game burst VFX */
+  .game-burst--radial,
+  .game-burst--spray,
+  .game-burst--spiral,
+  .game-burst--shatter,
+  .game-burst--bounce {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.5));
+  }
+
+  .game-burst__p {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--c);
+    text-shadow: 0 0 8px var(--c), 0 0 16px color-mix(in srgb, var(--c) 55%, transparent);
+    transform: translate(-50%, -50%);
+    will-change: transform, opacity, filter;
+    animation: game-burst-pop 780ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .game-burst--spray .game-burst__p {
+    animation-name: game-burst-spray;
+    animation-duration: 800ms;
+  }
+
+  .game-burst--shatter .game-burst__p {
+    animation-name: game-burst-shatter;
+    animation-duration: 750ms;
+  }
+
+  .game-burst--spiral .game-burst__p {
+    animation-name: game-burst-spiral;
+    animation-duration: 900ms;
+  }
+
+  .game-burst--bounce .game-burst__p {
+    animation-name: game-burst-bounce;
+    animation-duration: 900ms;
+  }
+
+  @keyframes game-burst-pop {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4) rotate(0deg); filter: brightness(1.2); }
+    20% { opacity: 1; transform: translate(calc(-50% + (var(--tx) * 0.12)), calc(-50% + (var(--ty) * 0.12))) scale(1.2) rotate(calc(var(--rot) * 0.2)); }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.2) rotate(var(--rot)); filter: brightness(0.95); }
+  }
+
+  @keyframes game-burst-spray {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.45) rotate(0deg); filter: brightness(1.2); }
+    24% { opacity: 1; transform: translate(calc(-50% + (var(--tx) * 0.2)), calc(-50% + (var(--ty) * 0.2))) scale(1.15) rotate(calc(var(--rot) * 0.25)); }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.18) rotate(var(--rot)); }
+  }
+
+  @keyframes game-burst-shatter {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4) rotate(0deg); filter: brightness(1.8) saturate(1.2); }
+    25% { opacity: 1; transform: translate(calc(-50% + (var(--tx) * 0.35)), calc(-50% + (var(--ty) * 0.35))) scale(1.35) rotate(calc(var(--rot) * 0.35)); }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.15) rotate(var(--rot)); filter: brightness(1) saturate(1); }
+  }
+
+  @keyframes game-burst-spiral {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.55) rotate(0deg); filter: brightness(1.7); }
+    18% { opacity: 1; }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.25) rotate(calc(var(--rot) + 220deg)); }
+  }
+
+  @keyframes game-burst-bounce {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.55) rotate(0deg); filter: brightness(1.7); }
+    20% { opacity: 1; transform: translate(calc(-50% + (var(--tx) * 0.35)), calc(-50% + (var(--ty) * 0.35))) scale(1.35) rotate(calc(var(--rot) * 0.25)); }
+    55% { opacity: 0.9; transform: translate(calc(-50% + (var(--tx) * 0.75)), calc(-50% + (var(--ty) * 0.75))) scale(0.9) rotate(calc(var(--rot) * 0.75)); }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.25) rotate(var(--rot)); }
+  }
+
+  /* Gacha summon overlays */
+  .summon-rays {
+    background:
+      conic-gradient(
+        from 0deg at 50% 50%,
+        rgba(255, 255, 255, 0) 0deg,
+        rgba(159, 231, 255, 0.2) 28deg,
+        rgba(255, 255, 255, 0) 56deg,
+        rgba(111, 0, 255, 0.22) 92deg,
+        rgba(255, 255, 255, 0) 126deg,
+        rgba(255, 215, 0, 0.2) 162deg,
+        rgba(255, 255, 255, 0) 196deg,
+        rgba(159, 231, 255, 0.2) 236deg,
+        rgba(255, 255, 255, 0) 270deg,
+        rgba(111, 0, 255, 0.2) 312deg,
+        rgba(255, 255, 255, 0) 360deg
+      );
+    animation: summon-rays-spin 1.6s linear infinite;
+    transform-origin: center;
+  }
+
+  .summon-ring {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(159, 231, 255, 0.28) 36%,
+      rgba(111, 0, 255, 0.2) 52%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    animation: summon-ring-pulse 1.25s ease-in-out infinite;
+  }
+
+  .animate-gacha-card-reveal {
+    animation: gacha-card-reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    box-shadow:
+      0 0 24px rgba(159, 231, 255, 0.45),
+      0 0 50px rgba(111, 0, 255, 0.35),
+      inset 0 0 14px rgba(255, 255, 255, 0.2);
+  }
+
+  @keyframes summon-rays-spin {
+    0% { transform: scale(0.95) rotate(0deg); opacity: 0.78; }
+    50% { transform: scale(1.04) rotate(180deg); opacity: 1; }
+    100% { transform: scale(0.95) rotate(360deg); opacity: 0.78; }
+  }
+
+  @keyframes summon-ring-pulse {
+    0%, 100% { transform: scale(0.92); opacity: 0.5; }
+    50% { transform: scale(1.08); opacity: 1; }
+  }
+
+  @keyframes gacha-card-reveal {
+    0% { transform: translate(-50%, -50%) scale(0.75) rotateY(0deg); opacity: 0.4; }
+    45% { transform: translate(-50%, -50%) scale(1.02) rotateY(8deg); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(0.86) rotateY(0deg); opacity: 0.55; }
+  }
+
+  /* ── Gacha Win Celebration ────────────────────────────────────────────── */
+
+  .gacha-celebration-root {
+    animation: gacha-root-in 0.22s ease-out forwards;
+  }
+
+  .gacha-fade-out {
+    animation: gacha-root-out 0.32s ease-in forwards !important;
+  }
+
+  @keyframes gacha-root-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes gacha-root-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  /* Dark backdrop fade */
+  .gacha-backdrop {
+    animation: gacha-backdrop-in 0.28s ease-out forwards;
+  }
+
+  @keyframes gacha-backdrop-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Rays color variants */
+  .gacha-rays-win {
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      rgba(34, 211, 238, 0.28) 30deg,
+      transparent 58deg,
+      rgba(96, 165, 250, 0.22) 96deg,
+      transparent 130deg,
+      rgba(34, 211, 238, 0.25) 170deg,
+      transparent 200deg,
+      rgba(14, 165, 233, 0.20) 244deg,
+      transparent 278deg,
+      rgba(34, 211, 238, 0.22) 318deg,
+      transparent 360deg
+    );
+  }
+
+  .gacha-rays-big {
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      rgba(255, 215, 0, 0.32) 30deg,
+      transparent 58deg,
+      rgba(255, 183, 0, 0.24) 96deg,
+      transparent 130deg,
+      rgba(255, 215, 0, 0.28) 170deg,
+      transparent 200deg,
+      rgba(245, 158, 11, 0.22) 244deg,
+      transparent 278deg,
+      rgba(255, 215, 0, 0.26) 318deg,
+      transparent 360deg
+    );
+  }
+
+  .gacha-rays-jackpot {
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      rgba(255, 215, 0, 0.3) 20deg,
+      transparent 42deg,
+      rgba(255, 110, 180, 0.28) 72deg,
+      transparent 100deg,
+      rgba(34, 211, 238, 0.28) 132deg,
+      transparent 160deg,
+      rgba(168, 85, 247, 0.3) 196deg,
+      transparent 224deg,
+      rgba(255, 215, 0, 0.28) 262deg,
+      transparent 290deg,
+      rgba(255, 110, 180, 0.26) 326deg,
+      transparent 360deg
+    );
+    animation: summon-rays-spin 1.1s linear infinite !important;
+  }
+
+  /* Title reveal */
+  .gacha-title-in {
+    animation: gacha-title-in 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes gacha-title-in {
+    0%   { opacity: 0; transform: scale(0.55) translateY(10px); filter: brightness(2); }
+    60%  { opacity: 1; transform: scale(1.06) translateY(-3px); filter: brightness(1.2); }
+    100% { opacity: 1; transform: scale(1) translateY(0);      filter: brightness(1); }
+  }
+
+  /* Tier badge reveal */
+  .gacha-badge-in {
+    animation: gacha-badge-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes gacha-badge-in {
+    0%   { opacity: 0; transform: scale(0.5) translateY(-8px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  /* Profit amount pop */
+  .gacha-amount-in {
+    animation: gacha-amount-in 0.36s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  @keyframes gacha-amount-in {
+    0%   { opacity: 0; transform: translateY(18px) scale(0.7); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Stars rising from bottom */
+  .gacha-star-rise {
+    animation: gacha-star-rise linear both;
+    pointer-events: none;
+  }
+
+  @keyframes gacha-star-rise {
+    0%   { opacity: 0;   transform: translateY(0) scale(0.4) rotate(0deg); }
+    12%  { opacity: 1;   transform: translateY(-8vh) scale(1) rotate(20deg); }
+    80%  { opacity: 0.9; transform: translateY(-72vh) scale(0.8) rotate(180deg); }
+    100% { opacity: 0;   transform: translateY(-90vh) scale(0.3) rotate(260deg); }
+  }
+
+  /* Expanding rings */
+  .gacha-ring-expand {
+    animation: gacha-ring-expand 1.4s ease-out infinite;
+  }
+
+  @keyframes gacha-ring-expand {
+    0%   { transform: scale(0.2); opacity: 0.9; }
+    60%  { opacity: 0.4; }
+    100% { transform: scale(2.6); opacity: 0; }
+  }
+
+  /* Horizontal shine sweep across title */
+  .gacha-shine {
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255,255,255,0.55) 48%,
+      rgba(255,255,255,0.70) 50%,
+      rgba(255,255,255,0.55) 52%,
+      transparent 70%
+    );
+    background-size: 200% 100%;
+    animation: gacha-shine-sweep 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.25s both;
+  }
+
+  @keyframes gacha-shine-sweep {
+    0%   { background-position: -100% 0; opacity: 0.6; }
+    60%  { opacity: 0.8; }
+    100% { background-position: 200% 0;  opacity: 0; }
+  }
+
+  /* Jackpot rainbow gradient shift */
+  @keyframes gacha-rainbow-shift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* ── Win Celebration v2 ──────────────────────────────────────────────── */
+
+  .win-cel-in {
+    animation: win-cel-fade-in 0.2s ease-out forwards;
+  }
+  .win-cel-out {
+    animation: win-cel-fade-out 0.34s ease-in forwards !important;
+  }
+  @keyframes win-cel-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes win-cel-fade-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  .win-backdrop {
+    animation: win-backdrop-in 0.26s ease-out forwards;
+  }
+  @keyframes win-backdrop-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Screen flash burst */
+  .win-flash {
+    animation: win-flash-burst 0.4s ease-out forwards;
+  }
+  @keyframes win-flash-burst {
+    0%   { opacity: 1; transform: scale(0.6); }
+    40%  { opacity: 0.85; transform: scale(1.2); }
+    100% { opacity: 0; transform: scale(1.8); }
+  }
+
+  /* Individual ray pulse */
+  .win-ray {
+    animation: win-ray-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes win-ray-pulse {
+    0%, 100% { opacity: var(--ray-base, 0.55); transform: rotate(var(--ray-rot, 0deg)) scaleX(0.92); }
+    50%       { opacity: 1;                    transform: rotate(var(--ray-rot, 0deg)) scaleX(1.06); }
+  }
+
+  /* Shockwave expanding ring */
+  .win-ring {
+    animation: win-ring-expand 1.35s cubic-bezier(0.1, 0.5, 0.4, 1) infinite;
+  }
+  @keyframes win-ring-expand {
+    0%   { transform: scale(0.18); opacity: 0.95; }
+    55%  { opacity: 0.5; }
+    100% { transform: scale(1.05); opacity: 0; }
+  }
+
+  /* Badge spring-in */
+  .win-badge {
+    animation: win-badge-in 0.34s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  @keyframes win-badge-in {
+    0%   { opacity: 0; transform: scale(0.45) translateY(-10px); }
+    70%  { transform: scale(1.08) translateY(2px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  /* Title pop (win / big win) */
+  .win-title-pop {
+    animation: win-title-pop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  @keyframes win-title-pop {
+    0%   { opacity: 0; transform: scale(0.5) translateY(12px); filter: brightness(2.5); }
+    55%  { opacity: 1; transform: scale(1.08) translateY(-4px); filter: brightness(1.3); }
+    100% { opacity: 1; transform: scale(1) translateY(0);       filter: brightness(1); }
+  }
+
+  /* Per-letter jackpot drop */
+  @keyframes win-letter-drop {
+    0%   { opacity: 0; transform: translateY(-70px) scale(0.45) rotate(-12deg); filter: brightness(3); }
+    55%  { opacity: 1; transform: translateY(5px) scale(1.1) rotate(3deg);      filter: brightness(1.4); }
+    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg);           filter: brightness(1); }
+  }
+
+  /* Amount slide-up */
+  .win-amount {
+    animation: win-amount-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.22s both;
+  }
+  @keyframes win-amount-in {
+    0%   { opacity: 0; transform: translateY(22px) scale(0.65); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Divider reveal */
+  .win-divider {
+    animation: win-divider-in 0.55s ease-out 0.65s both;
+    transform-origin: center;
+  }
+  @keyframes win-divider-in {
+    0%   { opacity: 0; transform: scaleX(0); }
+    100% { opacity: 1; transform: scaleX(1); }
+  }
+
+  /* Pop ring VFX – expanding ring on win/lose/gold */
+  .roguelike-ring-gold {
+    animation: ring-expand 0.5s ease-out forwards;
+    box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.2);
+  }
+
+  .roguelike-ring-win {
+    animation: ring-expand-win 0.5s ease-out forwards;
+  }
+
+  .roguelike-ring-lose {
+    animation: ring-expand-lose 0.5s ease-out forwards;
+  }
+
+  .animate-crash {
+    animation: crash-multiplier 0.3s ease-in-out;
+  }
+
+  .animate-dice-roll {
+    animation: dice-roll 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .animate-number-pop {
+    animation: number-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .animate-glow-rotate {
+    animation: glow-rotate 3s linear infinite;
+  }
+
+  /* Smooth transition for interactive elements */
+  .transition-game {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hover lift effect */
+  .hover-lift {
+    @apply transition-all duration-200;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Press effect */
+  .active-press:active {
+    transform: scale(0.97);
+  }
+
+  /* Card hover glow */
+  .card-glow {
+    @apply transition-all duration-300;
+  }
+  
+  .card-glow:hover {
+    box-shadow: 0 0 30px hsl(142 76% 45% / 0.15);
+  }
+
+  /* Button pulse for CTAs */
+  .btn-pulse {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(0 0% 5%);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(0 0% 20%);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(0 0% 30%);
+  }
+
+  /* Selection color */
+  ::selection {
+    background: hsl(142 76% 45% / 0.3);
+    color: hsl(142 76% 45%);
+  }
+
+  /* Roguelike stat panel – thick border, hover glow */
+  .stat-panel {
+    @apply rounded-xl p-4 transition-all duration-200;
+    background: linear-gradient(180deg, hsl(222 47% 9%), hsl(222 47% 5%));
+    border: 2px solid hsl(45 100% 50% / 0.2);
+    box-shadow: inset 0 1px 0 hsl(45 100% 50% / 0.08), 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .stat-panel:hover {
+    border-color: hsl(45 100% 50% / 0.35);
+    box-shadow: inset 0 1px 0 hsl(45 100% 50% / 0.12), 0 0 25px hsl(45 100% 50% / 0.1), 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Health-bar style progress (roguelike XP) */
+  .health-bar-track {
+    @apply h-3 rounded-full overflow-hidden;
+    background: hsl(0 70% 25% / 0.6);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .health-bar-fill {
+    @apply h-full rounded-full transition-all duration-500;
+    background: linear-gradient(90deg, hsl(142 70% 40%), hsl(142 90% 50%));
+    box-shadow: 0 0 12px hsl(142 76% 45% / 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}

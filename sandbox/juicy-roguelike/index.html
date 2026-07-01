@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roguelike Run — Juicy Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ========== HTML STRUCTURE ========== -->
+  <div id="app-root">
+    <canvas id="vfx-canvas" aria-hidden="true"></canvas>
+    <div id="screen-flash" class="screen-flash" aria-hidden="true"></div>
+    <div id="screen-dim" class="screen-dim" aria-hidden="true"></div>
+
+    <div class="bg-layer" aria-hidden="true"></div>
+    <div class="noise-layer" aria-hidden="true"></div>
+
+    <main class="hud">
+      <header class="hud__top">
+        <div class="brand idle-float">
+          <span class="brand__glyph">◇</span>
+          <span class="brand__text">RUN</span>
+        </div>
+        <div class="balance-wrap">
+          <span class="balance__label">Gold</span>
+          <span id="balance" class="balance__value idle-pulse-soft">0</span>
+        </div>
+      </header>
+
+      <section class="panel panel--risk">
+        <h2 class="panel__title">Wager</h2>
+        <div class="bet-row">
+          <button type="button" class="btn btn--ghost btn-press" data-bet="10">10</button>
+          <button type="button" class="btn btn--ghost btn-press" data-bet="50">50</button>
+          <button type="button" class="btn btn--ghost btn-press" data-bet="100">100</button>
+        </div>
+        <p class="hint">Higher bets → bigger VFX</p>
+      </section>
+
+      <section class="panel panel--actions">
+        <button type="button" id="btn-play" class="btn btn--primary btn-press btn-glow-hover">
+          Flip Fate
+        </button>
+        <button type="button" id="btn-safe" class="btn btn--secondary btn-press btn-glow-hover">
+          Safe Scavenge
+        </button>
+      </section>
+
+      <section class="panel panel--log">
+        <h2 class="panel__title">Last run</h2>
+        <p id="message" class="message">Press a button. The house remembers.</p>
+        <ul id="reward-list" class="reward-list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
